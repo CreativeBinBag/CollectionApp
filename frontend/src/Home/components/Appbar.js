@@ -45,9 +45,6 @@ const Appbar = () => {
     handleSignInMenuClose();
   };
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
 
   return (
     <Box
@@ -74,15 +71,19 @@ const Appbar = () => {
         </Typography>
         <Box display="flex" flexDirection="column" position="relative">
           <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px" position="relative">
-            <InstantSearch searchClient={searchClient} indexName="items">
+          <InstantSearch
+              searchClient={searchClient}
+              indexName="items"
+              onSearchStateChange={({ query }) => setSearchQuery(query || '')}
+            >
               <Configure hitsPerPage={10} />
               <SearchBox
                 translations={{ placeholder: 'Search' }}
                 className="search-box"
-                onChange={handleSearchChange}
                 autoFocus
               />
             </InstantSearch>
+
           </Box>
           {/* Position the results container directly below the search box */}
           {searchQuery && (

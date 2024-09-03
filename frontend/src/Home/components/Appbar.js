@@ -82,7 +82,8 @@ const Appbar = () => {
             />
             {/* Only show Hits if there is a query */}
             {searchQuery && (
-              <Box sx={{ maxHeight: '300px', backgroundColor: colors.primary[500] }}>
+              <Box  sx={{position: 'absolute',top: '100%', left: 0, width: '100%', maxHeight: '300px', overflowY: 'auto', backgroundColor: '#ffffff', borderRadius: '0 0 4px 4px', zIndex: 10
+              }}>
                 <Hits hitComponent={Hit} />
               </Box>
             )}

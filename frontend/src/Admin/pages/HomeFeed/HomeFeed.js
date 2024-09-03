@@ -18,7 +18,7 @@ import { useTheme } from '@emotion/react'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import LikeTheItem from './LikeTheItem'
 import CommentBox from './CommentBox'
-
+import '.\homefeed.css'
 
 const HomeFeed = () => {
   const theme = useTheme();
@@ -45,15 +45,11 @@ const HomeFeed = () => {
   },[])
 
   useEffect(() => {
-    console.log('Items:', items); // Log items to verify
     const queryParams = new URLSearchParams(location.search);
     const highlightedItemId = queryParams.get('highlightedItem');
-    console.log('Highlighted Item ID:', highlightedItemId);
-  
     if (highlightedItemId) {
       setTimeout(() => {
         const element = document.getElementById(highlightedItemId);
-        console.log('Element found:', element);
   
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -64,7 +60,7 @@ const HomeFeed = () => {
         } else {
           console.log('Element with ID not found.');
         }
-      }, 500); // Adjust timeout if needed
+      }, 500); 
     }
   }, [location, items]);
 

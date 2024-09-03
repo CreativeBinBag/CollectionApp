@@ -1,0 +1,6 @@
+.highlighted {
+  background-color: rgb(206, 203, 236); /* Highlight color */
+  transform: scale(1.2);
+  transition: transform 0.3s ease-in-out;
+  z-index: 10; /* Ensure it's above other elements */
+}

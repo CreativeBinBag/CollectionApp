@@ -9,7 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import searchClient from "../../algoliaClient";
 import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
-import Hit from "./Hit";
+import Hit from "../../Home/components/Hit";
 
 const Topbar = () => {
   const theme = useTheme();

@@ -70,37 +70,16 @@ const Appbar = () => {
           {t('personalCollectionApp')}
         </Typography>
         <Box display="flex" flexDirection="column" position="relative">
-          <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px" position="relative">
-          <InstantSearch
-              searchClient={searchClient}
-              indexName="items"
-              onSearchStateChange={({ query }) => setSearchQuery(query || '')}
-            >
+          <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
+             
+          <InstantSearch searchClient={searchClient} indexName="items">
               <Configure hitsPerPage={10} />
-              <SearchBox
-                translations={{ placeholder: 'Search' }}
-                className="search-box"
-                autoFocus
-              />
-            </InstantSearch>
-
-          </Box>
-          {/* Position the results container directly below the search box */}
-          {searchQuery && (
-            <Box sx={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              width: '100%',
-              maxHeight: '300px',
-              overflowY: 'auto',
-              backgroundColor: colors.primary[500],
-              borderRadius: '0 0 4px 4px',
-              zIndex: 10
-            }}>
+              <SearchBox translations={{ placeholder: 'Search' }} autoFocus />
               <Hits hitComponent={Hit} />
-            </Box>
-          )}
+            </InstantSearch>
+                    
+          </Box>
+     
         </Box>
       </Box>
 

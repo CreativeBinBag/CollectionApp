@@ -11,7 +11,8 @@ const Hit = ({ hit }) => (
       borderColor: 'divider',
       '&:last-of-type': {
         borderBottom: 'none'
-      }
+      },
+      listStyle: 'none'
     }}
   >
     <Typography variant="body1">

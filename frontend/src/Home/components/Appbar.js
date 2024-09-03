@@ -88,7 +88,7 @@ const Appbar = () => {
           {searchQuery && (
             <Box sx={{
               position: 'absolute',
-              top: 'calc(100% + 8px)',
+              top: '100%',
               left: 0,
               width: '100%',
               maxHeight: '300px',

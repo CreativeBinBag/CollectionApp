@@ -45,6 +45,9 @@ const Appbar = () => {
     handleSignInMenuClose();
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <Box
@@ -70,16 +73,33 @@ const Appbar = () => {
           {t('personalCollectionApp')}
         </Typography>
         <Box display="flex" flexDirection="column" position="relative">
-          <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
-             
-          <InstantSearch searchClient={searchClient} indexName="items">
+          <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px" position="relative">
+            <InstantSearch searchClient={searchClient} indexName="items">
               <Configure hitsPerPage={10} />
-              <SearchBox translations={{ placeholder: 'Search' }} autoFocus />
-              <Hits hitComponent={Hit} />
+              <SearchBox
+                translations={{ placeholder: 'Search' }}
+                className="search-box"
+                onChange={handleSearchChange}
+                atoFocus
+
+              />
+               {searchQuery && (
+                    <Box sx={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      width: '100%',
+                      maxHeight: '300px',
+                      overflowY: 'auto',
+                      backgroundColor: colors.primary[500],
+                      borderRadius: '0 0 4px 4px',
+                      zIndex: 10
+                    }}>
+                    <Hits hitComponent={Hit} />
+                  </Box>
+               )}
             </InstantSearch>
-                    
           </Box>
-     
         </Box>
       </Box>
 

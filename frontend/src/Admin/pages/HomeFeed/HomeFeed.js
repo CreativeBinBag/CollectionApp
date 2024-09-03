@@ -45,30 +45,29 @@ const HomeFeed = () => {
   },[])
 
   useEffect(() => {
+    console.log('Items:', items); // Log items to verify
     const queryParams = new URLSearchParams(location.search);
     const highlightedItemId = queryParams.get('highlightedItem');
-    console.log('Location changed:', location);
     console.log('Highlighted Item ID:', highlightedItemId);
   
     if (highlightedItemId) {
       setTimeout(() => {
         const element = document.getElementById(highlightedItemId);
-        console.log('Element found:', element); // Debugging line
+        console.log('Element found:', element);
   
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
           element.classList.add('highlighted');
           setTimeout(() => {
             element.classList.remove('highlighted');
-          }, 3000); // Remove highlight after 3 seconds
+          }, 3000);
         } else {
           console.log('Element with ID not found.');
         }
-      }, 100);
+      }, 500); // Adjust timeout if needed
     }
   }, [location, items]);
-  
-  
+
 
   const handleIconClick = (id) => {
     if (activeCommentBox === id) {
@@ -97,7 +96,7 @@ const handleCommentCountChange = (itemId, count) => {
       
       {items.map((item) => (
 
-                <Card key={item.id}
+                <Card key={item.id} id={item.id}
                 sx={{
                   width: { xs: "80vw", sm: "40vw", md: "30vw", lg: "30vw" },
                   borderRadius: '5%',

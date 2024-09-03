@@ -7,9 +7,8 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import searchClient from "../../algoliaClient";
-import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
+import {InstantSearch, SearchBox, Configure} from 'react-instantsearch-dom';
 import Results from "./SearchResults";
-import Hit2 from "./Hit2";
 
 const Topbar = () => {
   const theme = useTheme();

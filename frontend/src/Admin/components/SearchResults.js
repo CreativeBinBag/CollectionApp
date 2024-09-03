@@ -1,5 +1,5 @@
 import React from 'react';
-import { connectStateResults } from 'react-instantsearch-dom';
+import { connectStateResults, Hits} from 'react-instantsearch-dom';
 import Hit2 from "./Hit2";
 
 const Results = connectStateResults(({ searchState }) => {

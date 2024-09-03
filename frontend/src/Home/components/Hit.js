@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { Highlight } from 'react-instantsearch-dom';
-
+import { Link } from 'react-router-dom';
 
 
 const Hit = ({ hit }) => (
@@ -15,9 +15,9 @@ const Hit = ({ hit }) => (
     }}
   >
     <Typography variant="body1">
-      <a href={`/items/${hit.objectID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to ={`/items/${hit.objectID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <Highlight attribute="name" hit={hit} />
-      </a>
+      </Link>
     </Typography>
   </Box>
 );

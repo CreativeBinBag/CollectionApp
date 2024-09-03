@@ -73,7 +73,7 @@ const Appbar = () => {
           {t('personalCollectionApp')}
         </Typography>
         <Box display="flex" flexDirection="column" position="relative">
-          <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px" position="relative">
+          <Box display="flex" background="transparent" borderRadius="3px" position="relative">
             <InstantSearch searchClient={searchClient} indexName="items">
               <Configure hitsPerPage={10} />
               <SearchBox

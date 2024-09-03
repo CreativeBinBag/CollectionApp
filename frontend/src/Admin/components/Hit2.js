@@ -16,7 +16,7 @@ const Hit2 = ({ hit }) => (
     }}
   >
     <Typography variant="body1">
-      <Link to ={`/?highlightedItem=${hit.objectID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Link to ={`/feed?highlightedItem=${hit.objectID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <Highlight attribute="name" hit={hit} />
       </Link>
     </Typography>

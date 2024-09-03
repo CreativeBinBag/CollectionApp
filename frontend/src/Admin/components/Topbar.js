@@ -11,14 +11,6 @@ import searchClient from "../../algoliaClient";
 import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
 import Hit from "./Hit";
 
-
-const Hit = ({ hit }) => (
-  <div>
-    
-    <Highlight attribute="name" hit={hit} />
-  </div>
-);
-
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

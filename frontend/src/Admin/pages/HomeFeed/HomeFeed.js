@@ -51,6 +51,8 @@ const HomeFeed = () => {
 
     if(highlightedItemId){
       const element = document.getElementById(highlightedItemId);
+      console.log('Element found:', element); // Debugging line
+
       if(element){
         element.scrollIntoView({behavior: 'smooth', block: 'center'});
         element.classList.add('highlighted');

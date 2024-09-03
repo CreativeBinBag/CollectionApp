@@ -25,6 +25,7 @@ const Appbar = () => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElSignIn, setAnchorElSignIn] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   const handleLanguageMenuOpen = (event) => {
@@ -51,6 +52,10 @@ const Appbar = () => {
   const handleNavigation = (path) => {
     navigate(path);
     handleSignInMenuClose();
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -87,10 +92,10 @@ const Appbar = () => {
                   <SearchIcon />
                 </IconButton>
               )}
-              autoFocus
+              onChange={handleSearchChange}
             />
             {/* Only show Hits if there is a query */}
-            {Boolean(SearchBox.state.query) && <Hits hitComponent={Hit} />}
+            {searchQuery && <Hits hitComponent={Hit} />}
           </InstantSearch>
         </Box>
       </Box>

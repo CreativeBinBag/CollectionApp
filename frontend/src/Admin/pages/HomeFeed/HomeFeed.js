@@ -47,6 +47,8 @@ const HomeFeed = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const highlightedItemId = queryParams.get('highlightedItem');
+    console.log('Highlighted Item ID:', highlightedItemId); // Debugging line
+
     if(highlightedItemId){
       const element = document.getElementById(highlightedItemId);
       if(element){

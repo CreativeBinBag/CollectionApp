@@ -5,11 +5,12 @@ import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import searchClient from "../../algoliaClient";
 import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
 import Hit2 from "./Hit2";
+import debounce from 'lodash.debounce';
+
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -41,7 +42,7 @@ const Topbar = () => {
   );
 
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    const value = event.target.value;
     if (value === '') {
       setSearchQuery(''); // Clear search query immediately if input is empty
     } else {

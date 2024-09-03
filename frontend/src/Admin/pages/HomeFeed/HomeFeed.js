@@ -45,23 +45,30 @@ const HomeFeed = () => {
   },[])
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const highlightedItemId = queryParams.get('highlightedItem');
-    console.log('Highlighted Item ID:', highlightedItemId); // Debugging line
-
-    if(highlightedItemId){
-      const element = document.getElementById(highlightedItemId);
-      console.log('Element found:', element); // Debugging line
-
-      if(element){
-        element.scrollIntoView({behavior: 'smooth', block: 'center'});
-        element.classList.add('highlighted');
+    console.log('Location changed:', location);
+    if (items.length > 0) {
+      console.log('Items loaded:', items);
+      const queryParams = new URLSearchParams(location.search);
+      const highlightedItemId = queryParams.get('highlightedItem');
+      console.log('Highlighted Item ID:', highlightedItemId);
+  
+      if (highlightedItemId) {
         setTimeout(() => {
-           element.classList.remove('highlighted');
-        }, 3000)
+          const element = document.getElementById(highlightedItemId);
+          console.log('Element found:', element); // Debugging line
+  
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            element.classList.add('highlighted');
+            setTimeout(() => {
+              element.classList.remove('highlighted');
+            }, 3000);
+          }
+        }, 0);
       }
     }
-  }, [location] )
+  }, [location, items]);
+  
 
   const handleIconClick = (id) => {
     if (activeCommentBox === id) {

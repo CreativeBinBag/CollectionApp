@@ -1,5 +1,5 @@
 import {Box, IconButton, useTheme, Menu, MenuItem} from "@mui/material";
-import {useContext, useState, useCallback} from "react";
+import {useContext, useState} from "react";
 import { useTranslation } from "react-i18next";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -8,8 +8,8 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import searchClient from "../../algoliaClient";
 import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
+import Results from "./SearchResults";
 import Hit2 from "./Hit2";
-import debounce from 'lodash.debounce';
 
 const Topbar = () => {
   const theme = useTheme();
@@ -33,21 +33,10 @@ const Topbar = () => {
     i18n.changeLanguage(language);
     handleLanguageMenuClose();
   };
-
-  const debouncedSearch = useCallback(
-    debounce((value) => {
-      setSearchQuery(value);
-    }, 300),
-    []
-  );
+  
 
   const handleSearchChange = (event) => {
-    const value = event.target.value;
-    if (value === '') {
-      setSearchQuery(''); // Clear search query immediately if input is empty
-    } else {
-      debouncedSearch(value); // Use debounced function for non-empty input
-    }
+    setSearchQuery(event.target.value);
   };
 
 
@@ -65,11 +54,10 @@ const Topbar = () => {
                 translations={{ placeholder: 'Search' }}
                 className="search-box"
                 onChange={handleSearchChange}
-                atoFocus
+                autoFocus
 
               />
-               {searchQuery && (
-                    <Box sx={{
+                   <Box sx={{
                       position: 'absolute',
                       top: '100%',
                       left: 0,
@@ -80,9 +68,8 @@ const Topbar = () => {
                       borderRadius: '0 0 4px 4px',
                       zIndex: 10
                     }}>
-                    <Hits hitComponent={Hit2} />
+                      <Results />
                   </Box>
-               )}
             </InstantSearch>
           </Box>
         </Box>

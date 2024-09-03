@@ -1,5 +1,5 @@
 import {Box, IconButton, useTheme, Menu, MenuItem} from "@mui/material";
-import {useContext, useState} from "react";
+import {useContext, useState, useCallback} from "react";
 import { useTranslation } from "react-i18next";
 import { ColorModeContext, tokens } from "../../theme";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";

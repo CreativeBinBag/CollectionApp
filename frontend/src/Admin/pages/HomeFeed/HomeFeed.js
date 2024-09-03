@@ -18,7 +18,7 @@ import { useTheme } from '@emotion/react'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import LikeTheItem from './LikeTheItem'
 import CommentBox from './CommentBox'
-import '.\homefeed.css'
+import './homefeed.css'
 
 const HomeFeed = () => {
   const theme = useTheme();

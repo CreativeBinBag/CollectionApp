@@ -80,6 +80,7 @@ const Appbar = () => {
                 translations={{ placeholder: 'Search' }}
                 className="search-box"
                 onChange={handleSearchChange}
+                autoFocus
               />
             </InstantSearch>
           </Box>
@@ -87,7 +88,7 @@ const Appbar = () => {
           {searchQuery && (
             <Box sx={{
               position: 'absolute',
-              top: '100%',
+              top: 'calc(100% + 8px)',
               left: 0,
               width: '100%',
               maxHeight: '300px',

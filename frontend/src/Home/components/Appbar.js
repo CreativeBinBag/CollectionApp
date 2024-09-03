@@ -8,9 +8,13 @@ import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch-dom
 import searchClient from "../../algoliaClient";
 
 const Hit = ({ hit }) => (
-  <div>
-    <Highlight attribute="name" hit={hit} />
-  </div>
+  <Box>
+    <Typography variant="body1">
+      <a href={`/items/${hit.objectID}`}>
+        <Highlight attribute="name" hit={hit} />
+      </a>
+    </Typography>
+  </Box>
 );
 
 const Appbar = () => {
@@ -72,20 +76,19 @@ const Appbar = () => {
         >
           {t('personalCollectionApp')}
         </Typography>
-        <Box
-          display="flex"
-          backgroundColor={colors.primary[400]}
-          borderRadius="3px"
-        >
+        <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
           <InstantSearch searchClient={searchClient} indexName="items">
             <SearchBox
               translations={{ placeholder: 'Search' }}
+              className="search-box"
+              submitButtonComponent={() => (
+                <IconButton type="button" sx={{ p: 1, color: colors.grey[100] }}>
+                  <SearchIcon />
+                </IconButton>
+              )}
             />
             <Hits hitComponent={Hit} />
           </InstantSearch>
-          <IconButton type="button" sx={{ p: 1, color: colors.grey[100] }}>
-            <SearchIcon />
-          </IconButton>
         </Box>
       </Box>
 

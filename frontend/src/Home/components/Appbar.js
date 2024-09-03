@@ -8,9 +8,18 @@ import {InstantSearch, SearchBox, Hits, Highlight, Configure} from 'react-instan
 import searchClient from "../../algoliaClient";
 
 const Hit = ({ hit }) => (
-  <Box>
+  <Box
+    sx={{
+      padding: '8px',
+      borderBottom: '1px solid',
+      borderColor: 'divider',
+      '&:last-of-type': {
+        borderBottom: 'none'
+      }
+    }}
+  >
     <Typography variant="body1">
-      <a href={`/items/${hit.objectID}`}>
+      <a href={`/items/${hit.objectID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <Highlight attribute="name" hit={hit} />
       </a>
     </Typography>
@@ -95,7 +104,11 @@ const Appbar = () => {
               onChange={handleSearchChange}
             />
             {/* Only show Hits if there is a query */}
-            {searchQuery && <Hits hitComponent={Hit} />}
+            {searchQuery && (
+              <Box sx={{ maxHeight: '300px', overflowY: 'auto', backgroundColor: colors.primary[500] }}>
+                <Hits hitComponent={Hit} />
+              </Box>
+            )}
           </InstantSearch>
         </Box>
       </Box>

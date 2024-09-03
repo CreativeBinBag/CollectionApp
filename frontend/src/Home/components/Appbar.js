@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, InputBase, IconButton, Typography, useTheme, Menu, MenuItem} from "@mui/material";
 import { Search as SearchIcon, DarkModeOutlined as DarkModeOutlinedIcon, LightModeOutlined as LightModeOutlinedIcon, LanguageOutlined as LanguageOutlinedIcon, LoginOutlined as LoginOutlinedIcon } from "@mui/icons-material";
 import { ColorModeContext, tokens } from "../../theme";
-import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch-dom';
+import {InstantSearch, SearchBox, Hits, Highlight, Configure} from 'react-instantsearch-dom';
 import searchClient from "../../algoliaClient";
 
 const Hit = ({ hit }) => (
@@ -78,6 +78,7 @@ const Appbar = () => {
         </Typography>
         <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px">
           <InstantSearch searchClient={searchClient} indexName="items">
+            <Configure hitsPerPage={10} />
             <SearchBox
               translations={{ placeholder: 'Search' }}
               className="search-box"
@@ -86,8 +87,10 @@ const Appbar = () => {
                   <SearchIcon />
                 </IconButton>
               )}
+              autoFocus
             />
-            <Hits hitComponent={Hit} />
+            {/* Only show Hits if there is a query */}
+            {Boolean(SearchBox.state.query) && <Hits hitComponent={Hit} />}
           </InstantSearch>
         </Box>
       </Box>

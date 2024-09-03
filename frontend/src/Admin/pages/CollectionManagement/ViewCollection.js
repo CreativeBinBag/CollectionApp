@@ -212,7 +212,7 @@ const ViewCollection = () => {
             </Box>
 
             {/* Edit Item Dialog */}
-            <EditItemDialog open={dialogOpen} onClose={handleDialogClose} itemId={editItemId} customFields={customFields} />
+            <EditItemDialog open={dialogOpen} onClose={handleDialogClose} itemId={editItemId} customFields={customFields}     collectionItems={collection.Items} />
             {/* View Item Dialog */}
             <ViewItemDialog open={viewDialogOpen} onClose={() => setViewDialogOpen(false)} itemDetails={itemDetails} customFields={customFields} />
             {/* Confirm Delete Dialog */}

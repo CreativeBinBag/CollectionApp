@@ -1,10 +1,8 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import Sidebar from '../../components/Sidebar'
-import Topbar from '../../components/Topbar'
+import { useLocation } from 'react-router-dom'
 import { tokens } from '../../../theme'
 import api from '../../api/axios'
-import { styled } from '@mui/material/styles';
 import { Box, Chip} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -15,7 +13,6 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { FavoriteBorderOutlined} from '@mui/icons-material';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'; 
 import { useTheme } from '@emotion/react'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
@@ -30,8 +27,7 @@ const HomeFeed = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [activeCommentBox, setActiveCommentBox] = useState(null);
   const [commentCounts, setCommentCounts] = useState({}); 
-
-
+  const location = useLocation();
 
   useEffect(() =>{
     const fetchItemDetails = async() => {
@@ -47,6 +43,21 @@ const HomeFeed = () => {
     fetchItemDetails();
 
   },[])
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const highlightedItemId = queryParams.get('highlightedItem');
+    if(highlightedItemId){
+      const element = document.getElementById(highlightedItemId);
+      if(element){
+        element.scrollIntoView({behavior: 'smooth', block: 'center'});
+        element.classList.add('highlighted');
+        setTimeout(() => {
+           element.classList.remove('highlighted');
+        }, 3000)
+      }
+    }
+  }, [location] )
 
   const handleIconClick = (id) => {
     if (activeCommentBox === id) {

@@ -26,3 +26,8 @@ body,
   overflow-y: auto; /* Allow scrolling if content overflows */
 
 }
+
+.highlighted {
+  background-color: rgb(206, 203, 236); /* Highlight color */
+  transition: background-color 0.5s ease;
+}

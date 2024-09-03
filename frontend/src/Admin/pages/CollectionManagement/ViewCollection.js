@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import api from '../../api/axios';
 import { tokens } from '../../../theme';
-import { Box, Button, Card, Typography, Avatar, Stack, useTheme, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import { Box, Button, Card, Typography, Avatar, Stack, useTheme} from '@mui/material';
 import Header from '../../components/Header';
 import { DataGrid } from '@mui/x-data-grid';
 import Visibility from '@mui/icons-material/Visibility';
@@ -11,8 +11,9 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import EditItemForm from './EditItemForm';
 import ConfirmDeleteDialog from '../../components/ConfirmDeleteDialog';
+import ViewItemDialog from './ViewItemDialog';
+import EditItemDialog from './EditItemDialog';
 
 const ViewCollection = () => {
     const theme = useTheme();
@@ -55,8 +56,6 @@ const ViewCollection = () => {
         }
     };
 
-
-
     const handleDeleteConfirm = () => {
         api.delete(`/api/items/${itemToDelete}/delete`)
             .then(() => {
@@ -78,9 +77,7 @@ const ViewCollection = () => {
         return <Typography>Loading...</Typography>;
     }    
 
-    
-    // Get custom fields from collection model
-    const customFields = [
+        const customFields = [
         { field: 'custom_int1_value', state: collection.custom_int1_state, headerName: collection.custom_int1_name },
         { field: 'custom_int2_value', state: collection.custom_int2_state, headerName: collection.custom_int2_name },
         { field: 'custom_int3_value', state: collection.custom_int3_state, headerName: collection.custom_int3_name },
@@ -154,11 +151,7 @@ const ViewCollection = () => {
             ),
         },
     ];
-  
 
-    console.log('Columns:', columns);
-
- 
     return (
         <Box sx={{ padding: 3 }}>
             <Button onClick={() => navigate('/manage-collections')} variant="contained" sx={{ mb: 2, backgroundColor: colors.greenAccent[700] }}>
@@ -212,70 +205,18 @@ const ViewCollection = () => {
                                 '& .MuiDataGrid-footerContainer': { backgroundColor: colors.blueAccent[700] },
                                 '& .MuiDataGrid-virtualScroller': { backgroundColor: colors.primary[400] },
                                
-                                }
- 
-                            }
+                            }}
                         />
                     </Box>
                 </Box>
             </Box>
 
             {/* Edit Item Dialog */}
-            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="md" fullWidth>
-                <DialogTitle sx={{ color: colors.greenAccent[600], fontSize: 20 }}> {t('editItemDetails')}</DialogTitle>
-                <DialogContent>
-                    {editItemId && <EditItemForm itemId={editItemId} onClose={handleDialogClose} customFields={customFields.filter(field => collection.Items.some(item => item[field.field] !== null && item[field.field] !== undefined))} />}
-                </DialogContent>
-            </Dialog>
-
+            <EditItemDialog open={dialogOpen} onClose={handleDialogClose} itemId={editItemId} customFields={customFields} />
             {/* View Item Dialog */}
-            <Dialog open={viewDialogOpen} onClose={() => setViewDialogOpen(false)} maxWidth="sm"  PaperProps={{
-                 sx: {
-                       width: '400px', 
-                       maxHeight: '100vh', 
-                       borderRadius: '12px',
-                       padding: '10px',
-                    }
-                   }}fullWidth>
-                <DialogTitle sx={{ color: colors.greenAccent[600], fontSize: 20 }}>{t('itemDetails')}</DialogTitle>
-                <DialogContent sx={{padding: '16px'}}>
-                    {itemDetails && (
-                        <Card sx={{ padding: 2, borderRadius: "10px", backgroundColor: colors.blueAccent[800] }}>
-                            <Typography variant="h5" sx={{ fontWeight: 'bold', fontSize: 20 }}>
-                                {itemDetails.name}
-                            </Typography>
-                            {customFields
-                                .filter(field => itemDetails[field.field] !== null && itemDetails[field.field] !== undefined)
-                                .map(field => (
-                                    <Typography key={field.field} variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
-                                        {field.headerName || field.field.replace(/_/g, ' ')}: {itemDetails[field.field]}
-                                    </Typography>
-                                ))}
-                            {itemDetails.associatedTags && (
-                                <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
-                                        {t('tags')}: {itemDetails?.associatedTags?.map(tag => tag.name).join(', ')}
-                                </Typography>
-                            )}
-                            <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
-                                {t('createdAt')}: {new Date(itemDetails?.createdAt).toLocaleString()}
-                              
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                {t('lastUpdated')}:  {new Date(itemDetails?.updatedAt).toLocaleString()}
-                            </Typography>
-                        </Card>
-                    )}
-                </DialogContent>
-            </Dialog>
-              
-
-            
+            <ViewItemDialog open={viewDialogOpen} onClose={() => setViewDialogOpen(false)} itemDetails={itemDetails} customFields={customFields} />
             {/* Confirm Delete Dialog */}
-            <ConfirmDeleteDialog
-                open={deleteDialogOpen}
-                onClose={() => setDeleteDialogOpen(false)}
-                onConfirm={handleDeleteConfirm}
-                itemName={itemToDelete ? collection?.Items.find(item => item.id === itemToDelete)?.name : ''}
+            <ConfirmDeleteDialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)} onConfirm={handleDeleteConfirm} itemName={itemToDelete ? collection?.Items.find(item => item.id === itemToDelete)?.name : ''}
             />
         </Box>
     );

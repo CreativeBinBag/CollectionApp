@@ -9,8 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import searchClient from "../../algoliaClient";
 import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
-import Hit from "../../Home/components/Hit";
-
+import Hit2 from "./Hit2";
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -68,7 +67,7 @@ const Topbar = () => {
                       borderRadius: '0 0 4px 4px',
                       zIndex: 10
                     }}>
-                    <Hits hitComponent={Hit} />
+                    <Hits hitComponent={Hit2} />
                   </Box>
                )}
             </InstantSearch>

@@ -33,8 +33,20 @@ const Topbar = () => {
     handleLanguageMenuClose();
   };
 
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      setSearchQuery(value);
+    }, 300),
+    []
+  );
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
+    if (value === '') {
+      setSearchQuery(''); // Clear search query immediately if input is empty
+    } else {
+      debouncedSearch(value); // Use debounced function for non-empty input
+    }
   };
 
 

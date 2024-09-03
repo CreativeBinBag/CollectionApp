@@ -2,19 +2,19 @@ import {Box, IconButton, useTheme, Menu, MenuItem} from "@mui/material";
 import {useContext, useState} from "react";
 import { useTranslation } from "react-i18next";
 import { ColorModeContext, tokens } from "../../theme";
-import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch-dom';
-import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import searchClient from "../../algoliaClient";
-
+import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
+import Hit from "./Hit";
 
 
 const Hit = ({ hit }) => (
   <div>
+    
     <Highlight attribute="name" hit={hit} />
   </div>
 );
@@ -26,6 +26,8 @@ const Topbar = () => {
   const { i18n } = useTranslation();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
 
   const handleLanguageMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,27 +42,46 @@ const Topbar = () => {
     handleLanguageMenuClose();
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+
   return (
     <Box display="flex" justifyContent="space-between" p={2}
       sx={{
         background: `linear-gradient(90deg, ${colors.primary[500]} 0%, ${colors.primary[400]} 100%)`,
       }}
     >
-      <Box
-        display="flex"
-        backgroundColor={colors.primary[400]}
-        borderRadius="3px"
-      >
-        <InstantSearch searchClient={searchClient} indexName="items">
-          <SearchBox
-            translations={{ placeholder: t('search') }}
-          />
-          <Hits hitComponent={Hit} />
-        </InstantSearch>
-        <IconButton type="button" sx={{ p: 1 }}>
-          <SearchIcon />
-        </IconButton>
-      </Box>
+          <Box display="flex" flexDirection="column" position="relative">
+          <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="3px" position="relative">
+            <InstantSearch searchClient={searchClient} indexName="items">
+              <Configure hitsPerPage={10} />
+              <SearchBox
+                translations={{ placeholder: 'Search' }}
+                className="search-box"
+                onChange={handleSearchChange}
+                atoFocus
+
+              />
+               {searchQuery && (
+                    <Box sx={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      width: '100%',
+                      maxHeight: '300px',
+                      overflowY: 'auto',
+                      backgroundColor: colors.primary[500],
+                      borderRadius: '0 0 4px 4px',
+                      zIndex: 10
+                    }}>
+                    <Hits hitComponent={Hit} />
+                  </Box>
+               )}
+            </InstantSearch>
+          </Box>
+        </Box>
 
       <Box display="flex">
         <IconButton onClick={colorMode.toggleColorMode}>

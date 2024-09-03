@@ -4,27 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Box, InputBase, IconButton, Typography, useTheme, Menu, MenuItem} from "@mui/material";
 import { Search as SearchIcon, DarkModeOutlined as DarkModeOutlinedIcon, LightModeOutlined as LightModeOutlinedIcon, LanguageOutlined as LanguageOutlinedIcon, LoginOutlined as LoginOutlinedIcon } from "@mui/icons-material";
 import { ColorModeContext, tokens } from "../../theme";
-import {InstantSearch, SearchBox, Hits, Highlight, Configure} from 'react-instantsearch-dom';
+import {InstantSearch, SearchBox, Hits, Configure} from 'react-instantsearch-dom';
 import searchClient from "../../algoliaClient";
-
-const Hit = ({ hit }) => (
-  <Box
-    sx={{
-      padding: '8px',
-      borderBottom: '1px solid',
-      borderColor: 'divider',
-      '&:last-of-type': {
-        borderBottom: 'none'
-      }
-    }}
-  >
-    <Typography variant="body1">
-      <a href={`/items/${hit.objectID}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <Highlight attribute="name" hit={hit} />
-      </a>
-    </Typography>
-  </Box>
-);
+import Hit from "./Hit";
 
 const Appbar = () => {
   const theme = useTheme();
@@ -96,16 +78,11 @@ const Appbar = () => {
             <SearchBox
               translations={{ placeholder: 'Search' }}
               className="search-box"
-              submitButtonComponent={() => (
-                <IconButton type="button" sx={{ p: 1, color: colors.grey[100] }}>
-                  <SearchIcon />
-                </IconButton>
-              )}
               onChange={handleSearchChange}
             />
             {/* Only show Hits if there is a query */}
             {searchQuery && (
-              <Box sx={{ maxHeight: '300px', overflowY: 'auto', backgroundColor: colors.primary[500] }}>
+              <Box sx={{ maxHeight: '300px', backgroundColor: colors.primary[500] }}>
                 <Hits hitComponent={Hit} />
               </Box>
             )}

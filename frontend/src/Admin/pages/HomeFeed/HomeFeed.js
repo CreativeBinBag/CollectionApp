@@ -45,29 +45,25 @@ const HomeFeed = () => {
   },[])
 
   useEffect(() => {
-    console.log('Location changed:', location);
-    if (items.length > 0) {
-      console.log('Items loaded:', items);
-      const queryParams = new URLSearchParams(location.search);
-      const highlightedItemId = queryParams.get('highlightedItem');
-      console.log('Highlighted Item ID:', highlightedItemId);
+    const queryParams = new URLSearchParams(location.search);
+    const highlightedItemId = queryParams.get('highlightedItem');
   
-      if (highlightedItemId) {
-        setTimeout(() => {
-          const element = document.getElementById(highlightedItemId);
-          console.log('Element found:', element); // Debugging line
+    if (highlightedItemId) {
+      setTimeout(() => {
+        const element = document.getElementById(highlightedItemId);
+        console.log('Element found:', element); // Debugging line
   
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            element.classList.add('highlighted');
-            setTimeout(() => {
-              element.classList.remove('highlighted');
-            }, 3000);
-          }
-        }, 0);
-      }
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          element.classList.add('highlighted');
+          setTimeout(() => {
+            element.classList.remove('highlighted');
+          }, 3000); // Remove highlight after 3 seconds
+        }
+      }, 3000); // 3000 ms delay to ensure DOM is fully rendered
     }
   }, [location, items]);
+  
   
 
   const handleIconClick = (id) => {

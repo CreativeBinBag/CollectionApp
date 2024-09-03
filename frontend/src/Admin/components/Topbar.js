@@ -13,19 +13,23 @@ import searchClient from "../../algoliaClient";
 
 
 
-const Topbar = () => {
+const Hit = ({ hit }) => (
+  <div>
+    <Highlight attribute="name" hit={hit} />
+  </div>
+);
 
+const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const {i18n} = useTranslation();
-  const {t} = useTranslation();
-  const [anchorEl, setAnchorEl] = useState();
-  
+  const { i18n } = useTranslation();
+  const { t } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleLanguageMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
-  }
+  };
 
   const handleLanguageMenuClose = () => {
     setAnchorEl(null);
@@ -34,15 +38,14 @@ const Topbar = () => {
   const handleLanguageChange = (language) => {
     i18n.changeLanguage(language);
     handleLanguageMenuClose();
-  }
+  };
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}
-    sx={{
-    
-      background: `linear-gradient(90deg, ${colors.primary[500]} 0%, ${colors.primary[400]} 100%)`,
-      
-    }}>
+      sx={{
+        background: `linear-gradient(90deg, ${colors.primary[500]} 0%, ${colors.primary[400]} 100%)`,
+      }}
+    >
       <Box
         display="flex"
         backgroundColor={colors.primary[400]}
@@ -51,18 +54,15 @@ const Topbar = () => {
         <InstantSearch searchClient={searchClient} indexName="items">
           <SearchBox
             translations={{ placeholder: t('search') }}
-            // Styling or additional props can be added here
           />
+          <Hits hitComponent={Hit} />
         </InstantSearch>
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
         </IconButton>
       </Box>
 
-      {/* ICONS */}
       <Box display="flex">
-
-        {/*Colormode Toggle*/}
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
@@ -71,22 +71,21 @@ const Topbar = () => {
           )}
         </IconButton>
 
-         {/*Language Toggle*/}
         <IconButton onClick={handleLanguageMenuOpen}>
           <LanguageOutlinedIcon />
         </IconButton>
 
-
         <Menu
-        anchorEl = {anchorEl}
-        open = {Boolean(anchorEl)}
-        onClose = {handleLanguageMenuClose}
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleLanguageMenuClose}
         >
-
-          <MenuItem onClick = {() => handleLanguageChange("en")}> {t('english')} </MenuItem>
-          <MenuItem onClick = {() => handleLanguageChange("bn")}> বাংলা 
+          <MenuItem onClick={() => handleLanguageChange("en")}>
+            {t('english')}
           </MenuItem>
-
+          <MenuItem onClick={() => handleLanguageChange("bn")}>
+            বাংলা
+          </MenuItem>
         </Menu>
 
         <IconButton>

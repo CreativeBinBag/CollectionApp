@@ -7,6 +7,12 @@ import { ColorModeContext, tokens } from "../../theme";
 import {InstantSearch, SearchBox, Hits, Highlight} from 'react-instantsearch-dom';
 import searchClient from "../../algoliaClient";
 
+const Hit = ({ hit }) => (
+  <div>
+    <Highlight attribute="name" hit={hit} />
+  </div>
+);
+
 const Appbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -71,11 +77,11 @@ const Appbar = () => {
           backgroundColor={colors.primary[400]}
           borderRadius="3px"
         >
-            <InstantSearch searchClient={searchClient} indexName="items">
+          <InstantSearch searchClient={searchClient} indexName="items">
             <SearchBox
               translations={{ placeholder: 'Search' }}
-              // styling or additional props can be added here
             />
+            <Hits hitComponent={Hit} />
           </InstantSearch>
           <IconButton type="button" sx={{ p: 1, color: colors.grey[100] }}>
             <SearchIcon />
@@ -83,7 +89,6 @@ const Appbar = () => {
         </Box>
       </Box>
 
-      {/* ICONS */}
       <Box display="flex" gap={2}>
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === 'dark' ? (
@@ -93,7 +98,6 @@ const Appbar = () => {
           )}
         </IconButton>
 
-        {/* Language Toggle */}
         <IconButton onClick={handleLanguageMenuOpen}>
           <LanguageOutlinedIcon />
         </IconButton>
@@ -111,7 +115,6 @@ const Appbar = () => {
           </MenuItem>
         </Menu>
 
-        {/* Login */}
         <IconButton onClick={handleSignInMenuOpen}>
           <LoginOutlinedIcon />
         </IconButton>

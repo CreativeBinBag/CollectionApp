@@ -47,6 +47,8 @@ const HomeFeed = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const highlightedItemId = queryParams.get('highlightedItem');
+    console.log('Location changed:', location);
+    console.log('Highlighted Item ID:', highlightedItemId);
   
     if (highlightedItemId) {
       setTimeout(() => {
@@ -59,8 +61,10 @@ const HomeFeed = () => {
           setTimeout(() => {
             element.classList.remove('highlighted');
           }, 3000); // Remove highlight after 3 seconds
+        } else {
+          console.log('Element with ID not found.');
         }
-      }, 3000); // 3000 ms delay to ensure DOM is fully rendered
+      }, 100);
     }
   }, [location, items]);
   
